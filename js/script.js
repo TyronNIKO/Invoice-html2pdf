@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let templateHead = document.querySelector('.header img');
     let templateFoot = document.querySelector('.footer img');
     let newPageBtn = document.querySelector('.controls .btn-page');
+    let delBtn = document.querySelector('.delBtn');
     let clinic = {
         assutatop: {
             img: {
@@ -46,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
             },
         }
     };
+    let template = document.querySelector('#template').value;
     let count = false;
     let ro = new ResizeObserver(entries => {
         for (let entry of entries) {
@@ -80,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let SetTemplate = function(e) {
         let val = e.target.dataset.clinic;
+        template = val;
         templateHead.src = clinic[val].img.header;
         templateFoot.src = clinic[val].img.footer;
 
@@ -161,10 +164,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let AddNewTableRow = function(e) {
         let a = document.createElement('div');
         a.classList.add('row','table-row');
-        a.setAttribute('data-row','');
-        a.innerHTML = `<div><input type="text"></div><div class="desc"><textarea data-area="1"></textarea></div><div class="price"><span class="curency"></span><input type="number"></div>`;
+        // a.setAttribute('data-row','');
+        a.innerHTML = `<div><input type="text" class="rowQty"></div><div class="desc"><textarea data-area="1" class="rowDescription"></textarea></div><div class="price"><span class="curency"></span><input type="number" class="rowPrice"></div>`;
         table.append(a);
-        
+
     }
     let AddNewPage = function() {
         console.log("new page");
@@ -178,8 +181,61 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     let doPDF = function() {
         // New Promise-based usage:
+
+        savePDFdata();
+
         html2pdf().set(opt).from(element).save();
+
+        setTimeout(function() { window.location.href = '/'; }, 5000);
     }
+
+    let savePDFdata = function(is_del = false){
+
+        let rows_data = [];
+        let rows = document.querySelectorAll('.table .table-row');
+        for (let row of rows){
+            rows_data.push({
+                '0' : row.querySelector('.rowQty').value,
+                '1' : row.querySelector('.rowDescription').value,
+                '2' : row.querySelector('.rowPrice').value
+            });
+        }
+
+        let data = {
+            'id' : document.querySelector("[id=id]").value,
+            'invoice_id' : document.querySelector("[id=order-num]").value,
+            'patient_name' : document.querySelector("[id=patient_name]").value,
+            'patient_date' : document.querySelector("[id=patient_date]").value,
+            'country' : document.querySelector("[id=country]").value,
+            'currency' : (document.querySelectorAll("[name=currency]:checked").length === 0)?'':document.querySelector("[name=currency]:checked").value,
+            'template': template,
+            'rows': rows_data
+        }
+        if(is_del){
+            data.del = 1;
+        }
+
+        $.ajax({
+            url: '/index.php', data: data, type: 'POST', async: false, dataType: 'json'
+        }).done(function (data) {
+            if (data.status == 1) {
+                // window.location.href = '/';
+            } else if (data.status == 2) {
+                window.location.href = '/';
+            } else {
+                alert('Ошибка! Обновите страницу и попробуйте снова!');
+            }
+        }).fail(function(){
+            alert('Ошибка! Обновите страницу и попробуйте снова!');
+        });
+    }
+
+    let delPDFdata = function(){
+        if(confirm('Вы уверены, что хотите удалить инвойс?')) {
+            savePDFdata(true);
+        }
+    }
+
     /*Inits*/
     SetDate();
     templateSelect.forEach(item => {
@@ -201,6 +257,9 @@ document.addEventListener('DOMContentLoaded', function() {
     RowAddingBtn();
     btn.addEventListener('click', AddNewTableRow);
     newPageBtn.addEventListener('click', AddNewPage);
+    if(delBtn != null) {
+        delBtn.addEventListener('click', delPDFdata);
+    }
     /*Check if textarea resize and overflow size of container*/
     // textarea.forEach(area => {
     //     ro.observe(area);
