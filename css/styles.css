@@ -77,8 +77,7 @@ div>.field-group:last-of-type {
     width: 864px;
     min-height: 1118px;
     height: 100%;
-    margin: 20px auto;
-    background-color: #fff;
+    margin: 0 auto;
     position: relative;
 }
 .row {
@@ -357,4 +356,8 @@ div>.field-group:last-of-type {
 
 .rowDescription:focus {
     outline: 0;
+}
+
+.page {
+    background-color: #fff;
 }
