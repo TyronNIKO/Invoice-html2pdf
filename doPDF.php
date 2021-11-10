@@ -54,7 +54,7 @@ if (file_exists($db_file)) {
                 <label for="order-num">Order №:</label>
                 <input type="number" id="order-num" value="<?php echo $invoice['invoice_id']; ?>">
               </div>
-  
+
             </div>
           </div>
           <div class="row">
@@ -71,25 +71,14 @@ if (file_exists($db_file)) {
                 <label for="">Date of birth:</label>
                 <input type="date" id="patient_date" value="<?php echo $invoice['patient_date']; ?>"><br />
               </div>
-              <!-- <div class="field-group">
-                          <label for="">City:</label>
-                          <input type="text" id=""><br />
-                      </div> -->
               <div class="field-group">
                 <label for="">Country:</label>
                 <input type="text" id="country" value="<?php echo $invoice['country']; ?>"><br />
               </div>
-              <!-- <div class="field-group">
-                          <label for="">Phone:</label>
-                          <input type="tel" id="">
-                      </div> -->
             </div>
             <div class="order-date">
               <div class="curr-date">Date: <span></span></div>
               <div class="curr-order-num">Order №: <span></span></div>
-              <!-- <div class="field-group">
-                          <label for="">Rep:</label>
-                      </div> -->
             </div>
           </div>
           <div class="table-wrap">
@@ -106,8 +95,9 @@ if (file_exists($db_file)) {
                   <div class="desc">
                     <div contenteditable="true" class="rowDescription"><?php echo $row[1]; ?></div>
                   </div>
-                  <div class="price"><span class="curency"></span><input type="number" class="rowPrice"
-                      value="<?php echo $row[2]; ?>"></div>
+                  <div class="price"><span class="curency"></span>
+                    <input type="text" class="rowPrice" value="<?php echo $row[2]; ?>">
+                  </div>
                 </div>
                 <?php } ?>
               </div>
@@ -123,8 +113,18 @@ if (file_exists($db_file)) {
                   <li>IBAN: IL200176720000066551112</li>
                   <li>ACCOUNT NAME: TOP EXPERTS CENTER LTD</li>
                 </ul>
+
+                <img class="bank-details-stamp"
+                  src="https://assutatop.com/app/themes/promarket2/resources/child-theme/assutatop-com/images/stamp.png"
+                  alt="" width="100" height="100">
               </div>
-              <div class="total">Total: <span class="curency"></span><span class="count">0.00</span></div>
+              <div class="total">
+                <div>
+                  Total: <span class="curency"></span>&nbsp;<span class="count">0.00</span>
+                </div>
+
+                <button id="total-btn" class="total-btn">Пересчитать</button>
+              </div>
             </div>
           </div>
         </section>
@@ -141,24 +141,24 @@ if (file_exists($db_file)) {
     <div class="choose-currency">
       <div class="title">Выберите валюту</div>
       <div>
-        <input type="radio" id="dollar_curr" name="currency" value="1"
-          <?php echo ($invoice['currency'] == 1)?' checked="checked"':''; ?>>
+        <input type="radio" id="dollar_curr" name="currency" value="0"
+          <?php echo ($invoice['currency'] == 0)?' checked="checked"':''; ?>>
         <label for="dollar_curr">Доллар $</label>
       </div>
       <div>
-        <input type="radio" id="sheqel_curr" name="currency" value="2"
-          <?php echo ($invoice['currency'] == 2)?' checked="checked"':''; ?>>
+        <input type="radio" id="sheqel_curr" name="currency" value="1"
+          <?php echo ($invoice['currency'] == 1)?' checked="checked"':''; ?>>
         <label for="sheqel_curr">Шекель ₪</label>
       </div>
       <div>
-        <input type="radio" id="euro_curr" name="currency" value="3"
-          <?php echo ($invoice['currency'] == 3)?' checked="checked"':''; ?>>
+        <input type="radio" id="euro_curr" name="currency" value="2"
+          <?php echo ($invoice['currency'] == 2)?' checked="checked"':''; ?>>
         <label for="euro_curr">Евро €</label>
       </div>
     </div>
-    <button class="btn btn-success doPDF">doPDF</button>
+    <button class="btn btn-success" id="doPDF">doPDF</button>
     <?php if ($invoice['id'] > 0) { ?>
-    <button class="btn btn-primary delBtn">удалить</button>
+    <button class="btn btn-primary" id="removePage">удалить</button>
     <?php } ?>
     <input id="template" type="hidden" value="<?php echo $invoice['template']; ?>">
     <input id="id" type="hidden" value="<?php echo $invoice['id']; ?>">
