@@ -3,36 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	if (el) {
 		el.addEventListener('click', function (e) {
-			let options = {
-				id: document.querySelector('[id=id]').value,
-				invoice_id: document.querySelector('[id=order-num]').value,
-				patient_name: document.querySelector('[id=patient_name]').value,
-				patient_date: document.querySelector('[id=patient_date]').value,
-				country: document.querySelector('[id=country]').value,
-				currency: document.querySelectorAll('[name=currency]:checked').length === 0 ? '' : document.querySelector('[name=currency]:checked').value,
-				template: document.getElementById('template').value,
-			}
-
-			// $.ajax({
-			// 	url: '/index.php',
-			// 	data: options,
-			// 	type: 'POST',
-			// 	async: false,
-			// 	dataType: 'json',
-			// })
-			// .done(function (options) {
-			// 	if (options.status == 1) {
-			// 		// window.location.href = '/';
-			// 	} else if (options.status == 2) {
-			// 		// window.location.href = '/'
-			// 	} else {
-			// 		alert('Ошибка! Обновите страницу и попробуйте снова!')
-			// 	}
-			// })
-			// .fail(function () {
-			// 	alert('Ошибка! Обновите страницу и попробуйте снова!')
-			// })
-			
 			const params = new FormData();
 			params.append('id', document.querySelector('[id=id]').value)
 			params.append('invoice_id', document.querySelector('[id=order-num]').value)
@@ -49,16 +19,10 @@ document.addEventListener('DOMContentLoaded', function () {
 				headers: { "Content-Type": "multipart/form-data" },
 			})
 				.then(response => {
-					if (response.status == 1) {
-						// window.location.href = '/';
-					} else if (response.status == 2) {
-						// window.location.href = '/'
-					} else {
-						alert('Ошибка! Обновите страницу и попробуйте снова!')
-					}
+					
 				})
 				.catch(error => {
-					console.log(error)
+					
 				})
 				.finally(() => {
 					initHtml2Pdf()
