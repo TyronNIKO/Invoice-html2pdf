@@ -3,6 +3,8 @@
 $db_file = $_SERVER['DOCUMENT_ROOT'] . '/Data.json';
 $status = 1;
 
+var_dump($_REQUEST);die();
+
 if (!empty($_POST)) {
 
     if (!file_exists($db_file)) {

@@ -1,4 +1,5 @@
 window.axios = require('axios')
+window.$ = require('jquery')
 require('html2canvas')
 
 require('./utils/setInputFilter.js')

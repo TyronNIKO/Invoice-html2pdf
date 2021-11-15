@@ -1,5 +1,4 @@
 <?php
-
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $db_file = $_SERVER['DOCUMENT_ROOT'] . '/Data.json';
 $invoice = [
