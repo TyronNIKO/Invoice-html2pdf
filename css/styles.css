@@ -272,6 +272,7 @@ div > .field-group:last-of-type {
 	border: 1px solid #ccc;
 	border-radius: 15px;
 	text-transform: uppercase;
+    position:relative;
 }
 
 .price .curency {
@@ -380,14 +381,16 @@ div > .field-group:last-of-type {
 }
 
 .total-btn {
-	margin-top: 10px;
 	padding: 10px 15px;
 	display: inline-block;
-	background-color: blue;
+	background-color: rgb(2, 80, 153);
 	color: #fff;
 	font-size: 15px;
 	font-weight: 700;
 	cursor: pointer;
+    position:absolute;
+    top:0;
+    right: -80%;
 }
 
 .total-btn:active {
@@ -396,8 +399,8 @@ div > .field-group:last-of-type {
 
 .bank-details-stamp {
 	position: absolute;
-	top: -14px;
-	right: -17px;
+	top: -70px;
+	right: -85px;
 	object-fit: contain;
 }
 

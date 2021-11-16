@@ -1,6 +1,6 @@
 <?php
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-$db_file = $_SERVER['DOCUMENT_ROOT'] . '/Data.json';
+$db_file = $_SERVER['DOCUMENT_ROOT'].dirname($_SERVER["PHP_SELF"])."/Data.json";
 $invoice = [
     "id" => 0,
     "invoice_id" => "",
@@ -134,7 +134,12 @@ if (file_exists($db_file)) {
     </div>
   </div>
   <div class="controls fixed">
-    <a href="/" class="btn" style="background-color: red;">Назад</a>
+  <script>
+    function goBack() {
+        window.history.back();
+    }
+    </script>
+    <button onclick="goBack()" class="btn" style="background-color: red;">Назад</button>
     <button class="btn btn-primary btn-template" data-clinic="assutatop">Шаблон Ассута Топ</button>
     <button class="btn btn-primary btn-template" data-clinic="assutacomplex">Шаблон Ассута Комплекс</button>
     <button class="btn btn-primary btn-template" data-clinic="ichilovtop">Шаблон Ихилов Топ</button>

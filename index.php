@@ -1,6 +1,6 @@
 <?php
 
-$db_file = $_SERVER['DOCUMENT_ROOT'] . '/Data.json';
+$db_file = $_SERVER['DOCUMENT_ROOT'] . dirname($_SERVER["PHP_SELF"]) . "/Data.json";
 $status = 1;
 
 if (!empty($_POST)) {
@@ -87,7 +87,7 @@ if (file_exists($db_file)) {
                 <tr>
                 <td><?php echo $invoice['id']; ?></td>
                 <td>
-                    <a href="/doPDF.php?id=<?php echo $invoice['id']; ?>"><?php echo date('d.m.Y в H:i', strtotime($invoice['add_date'])); ?></a>
+                    <a href="./doPDF.php?id=<?php echo $invoice['id']; ?>"><?php echo date('d.m.Y в H:i', strtotime($invoice['add_date'])); ?></a>
                 </td>
                 <td><?php echo $invoice['invoice_id']; ?></td>
                 <td><?php echo $invoice['template']; ?></td>
@@ -96,6 +96,7 @@ if (file_exists($db_file)) {
             ?>
         </table>
     </div>
+    <div class="version" style="margin-top:30px;">2021.11.16 | Vladimir Belogorodskiy | main</div>
 </div>
 </body>
 </html>
