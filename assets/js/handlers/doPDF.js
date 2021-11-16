@@ -12,21 +12,37 @@ document.addEventListener('DOMContentLoaded', function () {
 			params.append('currency', document.querySelectorAll('[name=currency]:checked').length === 0 ? '' : document.querySelector('[name=currency]:checked').value)
 			params.append('template', document.getElementById('template').value)
 			
+			const rows = document.querySelectorAll('.table .table-row')
+			let rows_data = []
+			for (let row of rows) {
+				rows_data.push({
+					0: row.querySelector('.rowQty').value,
+					1: row.querySelector('.rowDescription').innerHTML,
+					2: row.querySelector('.rowPrice').value,
+				})
+			}
+
+			rows_data.forEach((element, index) => {
+				for (const [key, value] of Object.entries(element)) {
+					params.append(`rows[${index}][${key}]`, value);
+				}
+			})
+
 			axios({
 				url: '/index.php',
 				method: 'post',
-				data: JSON.stringify(options),
+				data: params,
 				headers: { "Content-Type": "multipart/form-data" },
 			})
-				.then(response => {
-					
-				})
-				.catch(error => {
-					
-				})
-				.finally(() => {
-					initHtml2Pdf()
-				})
+			.then(response => {
+				
+			})
+			.catch(error => {
+				
+			})
+			.finally(() => {
+				initHtml2Pdf()
+			})
 		})
 	}
 

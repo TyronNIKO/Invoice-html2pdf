@@ -88,7 +88,9 @@ if (file_exists($db_file)) {
                   <div>Description</div>
                   <div>Total</div>
                 </div>
-                <?php foreach ($invoice['rows'] as $row) { ?>
+                <?php 
+                
+                foreach ($invoice['rows'] as $row) { ?>
                 <div class="row table-row">
                   <div><input type="text" class="rowQty" value="<?php echo $row[0]; ?>"></div>
                   <div class="desc">
@@ -113,9 +115,9 @@ if (file_exists($db_file)) {
                   <li>ACCOUNT NAME: TOP EXPERTS CENTER LTD</li>
                 </ul>
 
-                <img class="bank-details-stamp"
-                  src="https://assutatop.com/app/themes/promarket2/resources/child-theme/assutatop-com/images/stamp.png"
-                  alt="" width="100" height="100">
+                <img class="bank-details-stamp" data-clinic-stamp="assutatop" id="blank-stamp"
+                  src=""
+                  alt="" width="200" height="200">
               </div>
               <div class="total">
                 <div>

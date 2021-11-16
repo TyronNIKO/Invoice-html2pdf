@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     element.addEventListener("click", function(e) {
       e.preventDefault();
       GetTemplate.methods.setTemplate(element.getAttribute("data-clinic"))
+      GetTemplate.methods.setStamp(element.getAttribute("data-clinic"))
     })
   })
 })
