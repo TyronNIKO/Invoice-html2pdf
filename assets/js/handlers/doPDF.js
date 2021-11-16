@@ -49,13 +49,18 @@ document.addEventListener('DOMContentLoaded', function () {
 	function initHtml2Pdf() {
 		const totalBtn = document.getElementById('total-btn')
 		totalBtn.style.display = 'none'
+		const removeFieldElement = document.querySelectorAll(".table-row-remove")
+
+		removeFieldElement.forEach(element => {
+			element.style.display = 'none'
+		})
 		try {
 			const element = document.getElementById('element-to-print')
 			html2pdf()
 				.from(element)
 				.set({
 					margin: 0,
-					filename: 'invoice.pdf',
+					filename: `${document.getElementById('order-num').value}_invoice.pdf`,
 					image: { type: 'jpeg', quality: 1 },
 					html2canvas: {
 						backgroundColor: '#ccc',
@@ -77,6 +82,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		} finally {
 			setTimeout(() => {
 				totalBtn.style.display = 'block'
+
+				removeFieldElement.forEach(element => {
+					element.style.display = 'flex'
+				})
 			}, 2000)
 		}
 	}

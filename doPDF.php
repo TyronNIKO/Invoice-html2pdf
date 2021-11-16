@@ -134,6 +134,7 @@ if (file_exists($db_file)) {
     </div>
   </div>
   <div class="controls fixed">
+    <a href="/" class="btn" style="background-color: red;">Назад</a>
     <button class="btn btn-primary btn-template" data-clinic="assutatop">Шаблон Ассута Топ</button>
     <button class="btn btn-primary btn-template" data-clinic="assutacomplex">Шаблон Ассута Комплекс</button>
     <button class="btn btn-primary btn-template" data-clinic="ichilovtop">Шаблон Ихилов Топ</button>
