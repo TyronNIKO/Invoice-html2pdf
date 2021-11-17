@@ -1,6 +1,8 @@
 <?php
+$serv_path = "$_SERVER[DOCUMENT_ROOT]".dirname($_SERVER["PHP_SELF"]);
+$path = "$_SERVER[REQUEST_URI]";
+$db_file = $serv_path."/Data.json";
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-$db_file = $_SERVER['DOCUMENT_ROOT'].dirname($_SERVER["PHP_SELF"])."/Data.json";
 $invoice = [
     "id" => 0,
     "invoice_id" => "",
@@ -89,7 +91,6 @@ if (file_exists($db_file)) {
                   <div>Total</div>
                 </div>
                 <?php 
-                
                 foreach ($invoice['rows'] as $row) { ?>
                 <div class="row table-row">
                   <div><input type="text" class="rowQty" value="<?php echo $row[0]; ?>"></div>
@@ -115,9 +116,7 @@ if (file_exists($db_file)) {
                   <li>ACCOUNT NAME: TOP EXPERTS CENTER LTD</li>
                 </ul>
 
-                <img class="bank-details-stamp" data-clinic-stamp="assutatop" id="blank-stamp"
-                  src=""
-                  alt="" width="200" height="200">
+                <img class="bank-details-stamp" data-clinic-stamp="assutatop" id="blank-stamp" src="" alt="" width="200" height="200">
               </div>
               <div class="total">
                 <div>

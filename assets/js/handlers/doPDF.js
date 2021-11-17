@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			
 			const rows = document.querySelectorAll('.table .table-row')
 			let rows_data = []
+            let clearpath = location.href.replace(/[^/]*$/, "");
 			for (let row of rows) {
 				rows_data.push({
 					0: row.querySelector('.rowQty').value,
@@ -29,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			})
 
 			axios({
-				url: '/index.php',
+				url: clearpath+'/index.php',
 				method: 'post',
 				data: params,
 				headers: { "Content-Type": "multipart/form-data" },
