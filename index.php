@@ -127,7 +127,7 @@ if (file_exists($db_file)) {
             ?>
             </table>
         </div>
-        <div class="version" style="margin-top:30px;">2021.11.16 | Vladimir Belogorodskiy | main</div>
+        <div class="version" style="margin-top:30px;">2021.11.18 | Vladimir Belogorodskiy | main</div>
     </div>
 </body>
 <script>
