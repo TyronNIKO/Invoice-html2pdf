@@ -5,19 +5,15 @@ $db_file = $serv_path."/Data.json";
 $status = 1;
 
 if (!empty($_POST)) {
-
     if (!file_exists($db_file)) {
         file_put_contents(
             $db_file,
             json_encode([], JSON_UNESCAPED_UNICODE)
         );
     }
-
     $invoices = json_decode(file_get_contents($db_file), true);
-
     $invoice = $_POST;
     $invoice['id'] = (int)$_POST['id'];
-
     if ($invoice['id'] > 0) {
         if ($invoice['del'] == 1) {
             foreach ($invoices as $k => $inv) {
@@ -40,17 +36,13 @@ if (!empty($_POST)) {
         $invoice['add_date'] = date('Y-m-d H:i:s');
         $invoices[] = $invoice;
     }
-
-
     file_put_contents(
         $db_file,
         json_encode($invoices, JSON_UNESCAPED_UNICODE)
     );
-
     echo json_encode(['status' => $status]);
     die;
 }
-
 $invoices_list = [];
 if (file_exists($db_file)) {
     $invoices_list = json_decode(file_get_contents($db_file), true);
@@ -106,6 +98,7 @@ if (file_exists($db_file)) {
                 <tr>
                     <td>ID</td>
                     <td>Дата создания</td>
+                    <td>Дата документа</td>
                     <td>Order № (Сделка)</td>
                     <td>ФИ пациента</td>
                     <td>Клиника</td>
@@ -119,6 +112,7 @@ if (file_exists($db_file)) {
                     <td>
                         <a href="<?php echo $path?>doPDF.php?id=<?php echo $invoice['id']; ?>"><?php echo date('d.m.Y в H:i', strtotime($invoice['add_date'])); ?></a>
                     </td>
+                    <td class="cur_date"><?php echo $invoice['cur_date']; ?></td>
                     <td class="invoice_id"><?php echo $invoice['invoice_id']; ?></td>
                     <td class="patient_name"><?php echo $invoice['patient_name']; ?></td>
                     <td class="template"><?php echo $invoice['template']; ?></td>

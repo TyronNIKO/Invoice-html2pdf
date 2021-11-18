@@ -3,12 +3,14 @@ $serv_path = "$_SERVER[DOCUMENT_ROOT]".dirname($_SERVER["PHP_SELF"]);
 $path = "$_SERVER[REQUEST_URI]";
 $db_file = $serv_path."/Data.json";
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
 $invoice = [
     "id" => 0,
     "invoice_id" => "",
     "patient_name" => "",
     "patient_date" => "",
     "country" => "",
+    "cur_date" => "",
     "currency" => "0",
     "template" => "assutatop",
     "rows" => [["", "", ""]],
@@ -25,19 +27,22 @@ if (file_exists($db_file)) {
         }
     }
 }
+// var_dump($invoices);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><?php echo $invoice['invoice_id'] ? $invoice['invoice_id'] : "New";?>_Invoice </title>
     <script src="./dist/html2pdf.bundle.min.js"></script>
     <script src="./js/script.js"></script>
     <link rel="stylesheet" href="./css/styles.css">
 </head>
+
 <body>
     <div class="container">
         <div id="element-to-print">
@@ -60,20 +65,22 @@ if (file_exists($db_file)) {
                             <div class="title">Customer</div>
                             <div class="field-group">
                                 <label for="">Patien Name:</label>
-                                <input type="text" id="patient_name" value="<?php echo $invoice['patient_name']; ?>"><br />
+                                <input type="text" id="patient_name" value="<?php echo $invoice['patient_name']; ?>">
                             </div>
                             <div class="field-group">
                                 <label for="">Date of birth:</label>
-                                <input type="date" id="patient_date" value="<?php echo $invoice['patient_date']; ?>"><br />
+                                <div id="patient_date"><?php echo $invoice['patient_date']?$invoice['patient_date']:"Введите дату"?></div>
+                                <input type="date" class="patient_date">
                             </div>
                             <div class="field-group">
                                 <label for="">Country:</label>
-                                <input type="text" id="country" value="<?php echo $invoice['country']; ?>"><br />
+                                <input type="text" id="country" value="<?php echo $invoice['country']; ?>">
                             </div>
                         </div>
                         <div class="order-date">
-                            <div class="curr-date">Date: <span></span></div>
+                            <div class="curr-date">Date: <span><?php echo $invoice['cur_date'] ? $invoice['cur_date'] : date('d-m-Y'); ?></span></div>
                             <div class="curr-order-num">Order №: <span></span></div>
+                            <div class="date-correction"><input type="date"></div>
                         </div>
                     </div>
                     <div class="table-wrap">
@@ -110,7 +117,7 @@ if (file_exists($db_file)) {
                                 <li>IBAN: IL200176720000066551112</li>
                                 <li>ACCOUNT NAME: TOP EXPERTS CENTER LTD</li>
                             </ul>
-                            <img class="bank-details-stamp" data-clinic-stamp="assutatop" id="blank-stamp" src="" alt="" width="200" height="200">
+                            <img class="bank-details-stamp" data-clinic-stamp="assutatop" id="blank-stamp" src="" alt="" width="300" height="300">
                         </div>
                         <div class="total-info">
                             <div>
@@ -122,17 +129,12 @@ if (file_exists($db_file)) {
                     <div class="row page_number">
                         <!--$page_num-->
                     </div>
-            </section>
-            <section class="footer"><img src="./img/AssutaTop_bottom@1200px.png" alt=""></section>
+                </section>
+                <section class="footer"><img src="./img/AssutaTop_bottom@1200px.png" alt=""></section>
+            </div>
         </div>
     </div>
-    </div>
     <div class="controls fixed">
-        <script>
-            function goBack() {
-                window.history.back();
-            }
-        </script>
         <button onclick="goBack()" class="btn" style="background-color: red;">Назад</button>
         <div class="title">Выберите клинику</div>
         <button class="btn btn-template" data-clinic="assutatop">Шаблон Ассута Топ</button>
@@ -142,7 +144,7 @@ if (file_exists($db_file)) {
         <div class="title">Настройки документа</div>
         <button class="btn btn-warning btn-page" id="btn-new-page">Добавить страницу</button>
         <?php if ($invoice['id'] > 0) { ?>
-            <button class="btn btn-warning" id="removePage">Удалить страницу</button>
+        <button class="btn btn-warning" id="removePage">Удалить страницу</button>
         <?php } ?>
         <div class="choose-currency">
             <div class="title">Выберите валюту</div>
@@ -163,7 +165,67 @@ if (file_exists($db_file)) {
 
         <input id="template" type="hidden" value="<?php echo $invoice['template']; ?>">
         <input id="id" type="hidden" value="<?php echo $invoice['id']; ?>">
+
+        <div class="text-template">
+            <button id="text-template-pop-btn" class="btn btn-warning">Заметки</button>
+            <div class="text-template-popup">
+                <div class="popup_content">
+                    <div class="popup_head">
+                        <div class="left">
+                            <div class="text">Оригинал</div>
+                        </div>
+                        <div class="right">
+                            <div class="text">Перевод</div>
+                        </div>
+                        <div class="close">X</div>
+                    </div>
+                    <div class="popup_body">
+                        <div class="left">
+                            <div contenteditable="true" class="text original"></div>
+                        </div>
+                        <div class="right">
+                            <div contenteditable="true" class="text transleted"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+
+    function changePatientDate() {
+        let patientDate = document.querySelector("#patient_date"),
+            patientInput = document.querySelector(".patient_date");
+        patientInput.addEventListener('change', function() {
+            if (patientInput) {
+                var date = patientInput.value;
+                date = date.split("-").reverse().join(".");
+                patientDate.innerHTML = date;
+            } else {
+                console.log('no date selected ', patientInput);
+            }
+        })
+    }
+    changePatientDate();
+
+    function changeCurrentDate() {
+        let currDate = document.querySelector(".curr-date span"),
+            currInput = document.querySelector(".date-correction input");
+        currInput.addEventListener('change', function() {
+            if (currInput) {
+                var date = currInput.value;
+                date = date.split("-").reverse().join("-");
+                currDate.innerHTML = date;
+            } else {
+                console.log('no date selected ', currInput);
+            }
+        })
+    }
+    changeCurrentDate();
+</script>
 
 </html>
