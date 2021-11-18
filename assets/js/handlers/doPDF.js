@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
 	const el = document.getElementById('doPDF')
-
 	if (el) {
 		el.addEventListener('click', function (e) {
 			const params = new FormData();
@@ -11,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function () {
 			params.append('country', document.querySelector('[id=country]').value)
 			params.append('currency', document.querySelectorAll('[name=currency]:checked').length === 0 ? '' : document.querySelector('[name=currency]:checked').value)
 			params.append('template', document.getElementById('template').value)
-			
 			const rows = document.querySelectorAll('.table .table-row')
 			let rows_data = []
             let clearpath = location.href.replace(/[^/]*$/, "");
@@ -22,13 +20,11 @@ document.addEventListener('DOMContentLoaded', function () {
 					2: row.querySelector('.rowPrice').value,
 				})
 			}
-
 			rows_data.forEach((element, index) => {
 				for (const [key, value] of Object.entries(element)) {
 					params.append(`rows[${index}][${key}]`, value);
 				}
 			})
-
 			axios({
 				url: clearpath+'/index.php',
 				method: 'post',
@@ -36,22 +32,18 @@ document.addEventListener('DOMContentLoaded', function () {
 				headers: { "Content-Type": "multipart/form-data" },
 			})
 			.then(response => {
-				
 			})
 			.catch(error => {
-				
 			})
 			.finally(() => {
 				initHtml2Pdf()
 			})
 		})
 	}
-
 	function initHtml2Pdf() {
 		const totalBtn = document.getElementById('total-btn')
 		totalBtn.style.display = 'none'
 		const removeFieldElement = document.querySelectorAll(".table-row-remove")
-
 		removeFieldElement.forEach(element => {
 			element.style.display = 'none'
 		})
@@ -83,7 +75,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		} finally {
 			setTimeout(() => {
 				totalBtn.style.display = 'block'
-
 				removeFieldElement.forEach(element => {
 					element.style.display = 'flex'
 				})

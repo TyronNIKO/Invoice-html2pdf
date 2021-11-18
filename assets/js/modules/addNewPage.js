@@ -6,6 +6,8 @@ const AddNewPage = {
 		if (forAppend && forClone && html !== '' && selectorForContent !== '') {
 			AddNewPage.methods.cloned(forAppend, forClone, html, selectorForContent)
 			AddNewPage.methods.setIndexForPages(selectorForClone)
+            AddNewPage.methods.moveTotal(selectorForClone)
+            AddNewPage.methods.setNumberOfPages()
 			AddNewField.init()
 			Currency.init()
 			SetPrice.init()
@@ -29,11 +31,17 @@ const AddNewPage = {
 				}
 			})
 		},
-
+        setNumberOfPages() {
+			document.querySelectorAll('.page_number').forEach((item, index) => {
+				index++
+				if (index > 0) {
+					item.innerHTML = index
+				}
+			})
+		},
 		remove() {
 			const index = prompt('Укажите индекс страницы для удаления', '')
 			const page = document.querySelector(`[data-index='${index}']`)
-
 			if (page && Number(index) !== 1) {
 				page.remove()
 			} else {

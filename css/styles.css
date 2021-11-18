@@ -131,7 +131,21 @@ div > .field-group:last-of-type {
 .btn-primary {
 	background-color: rgb(2, 80, 153);
 }
-
+.btn-warning {
+    background-color: #e0a800;
+}
+.btn-template[data-clinic='assutatop'] {
+    background-color: #0097be;
+}
+.btn-template[data-clinic='assutacomplex'] {
+    background-color: #0097be;
+}
+.btn-template[data-clinic='ichilovtop'] {
+    background-color: #f77676;
+}
+.btn-template[data-clinic='ichilovcomplex'] {
+    background-color: #f77676;
+}
 #order-num {
 	color: red;
 }
@@ -229,14 +243,14 @@ div > .field-group:last-of-type {
 	margin-top: 5px;
 	left: 0;
 }
-.customer {
+.customer-info {
 	width: 100%;
 	padding: 15px;
 	border: 1px solid #ccc;
 	border-radius: 15px;
 	margin-right: 15px;
 }
-.customer .title {
+.customer-info .title {
 	margin-top: -30px;
 	margin-bottom: 15px;
 	padding: 0 15px;
@@ -266,7 +280,7 @@ div > .field-group:last-of-type {
 	background: #fff;
 	width: fit-content;
 }
-.total {
+.total-info {
 	width: 30%;
 	padding: 15px;
 	border: 1px solid #ccc;
@@ -299,14 +313,17 @@ div > .field-group:last-of-type {
 	padding: 20px;
 	box-sizing: border-box;
 }
-.orders a {
-	color: #000;
+
+.orders>div:not(:last-of-type) {
+    box-sizing: border-box;
+    margin-bottom: 15px;
 }
 .orders .header {
 	display: flex;
 	justify-content: space-between;
 	height: auto;
 	align-items: center;
+    
 }
 .orders .header h1 {
 	font-weight: normal;
@@ -319,7 +336,7 @@ div > .field-group:last-of-type {
 	border-radius: 10px;
 }
 .orders .list {
-	margin: 20px 0 0 0;
+    margin-bottom: 15px;
 }
 .orders .list table {
 	width: 100%;
@@ -411,11 +428,28 @@ div > .field-group:last-of-type {
 
 .search {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     border: none;
     justify-content: space-between;
+    border: none !important;
 }
-#search_input {
+.search_group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+.search_group:last-child {
+    margin-bottom: 0;
+}
+.search_input {
     border: 1px solid #000;
     margin-right: 15px;
+}
+.search .btn:not(:last-of-type) {
+    margin-right: 15px;
+}
+
+.page_number {
+    justify-content: center;
 }
