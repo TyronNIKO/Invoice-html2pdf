@@ -20,16 +20,15 @@ document.addEventListener('DOMContentLoaded', function () {
 					1: row.querySelector('.rowDescription').innerHTML,
 					2: row.querySelector('.rowPrice').value,
 				})
-			}
+			}	
 
 			rows_data.forEach((element, index) => {
 				for (const [key, value] of Object.entries(element)) {
 					params.append(`rows[${index}][${key}]`, value);
 				}
 			})
-
 			axios({
-				url: '/index.php',
+				url: "./index.php",
 				method: 'post',
 				data: params,
 				headers: { "Content-Type": "multipart/form-data" },
