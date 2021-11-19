@@ -25,7 +25,11 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
         </div>
         </div>
-        </div>`
+        </div>
+        <div class="row page_number">
+                      
+                    </div>
+        `
 		selectorAddedPage.addEventListener('click', function (event) {
 			event.preventDefault()
 			AddNewPage.init('.page', html, '#element-to-print', '.content')

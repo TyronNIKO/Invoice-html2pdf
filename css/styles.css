@@ -470,6 +470,11 @@ div > .field-group:last-of-type {
 
 .page_number {
 	justify-content: center;
+    order: 1;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 0;
+    margin-top: 15px;
 }
 
 .modal--open .modals {

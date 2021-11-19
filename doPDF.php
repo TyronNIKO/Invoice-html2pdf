@@ -106,7 +106,11 @@ if (file_exists($db_file)) {
                             </div>
                         </div>
                     </div>
-                    <div class="row total">
+                    <div class="row page_number">
+                        1
+                    </div>
+
+                    <div class="row total" id="total">
                         <div class="bank-details">
                             <div class="title">Bank details</div>
                             <ul>
@@ -124,10 +128,8 @@ if (file_exists($db_file)) {
                                 Total: <span class="curency"></span>&nbsp;<span class="count">0.00</span>
                             </div>
                             <button id="total-btn" class="total-btn">Пересчитать</button>
+                            
                         </div>
-                    </div>
-                    <div class="row page_number">
-                        <!--$page_num-->
                     </div>
                 </section>
                 <section class="footer"><img src="./img/AssutaTop_bottom@1200px.png" alt=""></section>
