@@ -167,26 +167,25 @@ if (file_exists($db_file)) {
         <input id="id" type="hidden" value="<?php echo $invoice['id']; ?>">
 
         <div class="text-template">
-            <button id="text-template-pop-btn" class="btn btn-warning">Заметки</button>
-            <div class="text-template-popup">
-                <div class="popup_content">
-                    <div class="popup_head">
-                        <div class="left">
-                            <div class="text">Оригинал</div>
-                        </div>
-                        <div class="right">
-                            <div class="text">Перевод</div>
-                        </div>
-                        <div class="close">X</div>
-                    </div>
-                    <div class="popup_body">
-                        <div class="left">
+            <button class="btn btn-warning" data-get-modal="simple-modal">Заметки</button>
+        </div>
+    </div>
+
+    <div class="modals">
+        <div class="modals__modal" data-modal="simple-modal">
+            <div class="modals__modal-row">
+                <div class="modals__modal-block">
+                    <div class="modals__cols">
+                        <div class="modals__col">
+                            <p class="modals__col-title">Оригинал</p>
                             <div contenteditable="true" class="text original"></div>
                         </div>
-                        <div class="right">
+                        <div class="modals__col">
+                            <p class="modals__col-title">Перевод</p>
                             <div contenteditable="true" class="text transleted"></div>
                         </div>
                     </div>
+                    <div class="modals__close" data-close-modal="simple-modal">X</div>
                 </div>
             </div>
         </div>
