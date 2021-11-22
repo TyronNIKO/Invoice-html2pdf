@@ -28,7 +28,6 @@ const AddNewPage = {
 				index++
 				if (index > 0) {
 					item.setAttribute('data-index', index)
-
 					item.querySelector('.page_number').innerHTML = index
 				}
 			})
@@ -45,6 +44,7 @@ const AddNewPage = {
 			const index = prompt('Укажите индекс страницы для удаления', '')
 			const page = document.querySelector(`[data-index='${index}']`)
 			if (page && Number(index) !== 1) {
+				AddNewPage.methods.changePlace("#total")
 				page.remove()
 			} else {
 				alert('Страницы с таким индексом не существует')
@@ -52,9 +52,11 @@ const AddNewPage = {
 		},
 
 		changePlace(selector) {
-			const array = document.querySelectorAll('.page');
 			const element = document.querySelector(selector)
-			array[array.length - 1].querySelector(".content").append(element)
+			setTimeout(() => {
+				const array = document.querySelectorAll('.page');
+				array[array.length - 1].querySelector(".content").append(element)
+			}, 100);
 		}
 	},
 }

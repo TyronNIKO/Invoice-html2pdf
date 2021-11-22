@@ -14,7 +14,6 @@ $invoice = [
     "currency" => "0",
     "template" => "assutatop",
     "rows" => [["", "", ""]],
-    "id" => 0
 ];
 if (file_exists($db_file)) {
     $invoices = array_reverse(json_decode(file_get_contents($db_file), true));
@@ -92,7 +91,7 @@ if (file_exists($db_file)) {
                                     <div>Total</div>
                                 </div>
                                 <?php
-                                foreach ($invoice['rows'] as $row) { ?>
+                                foreach ($invoice['rows'] as $index => $row) { ?>
                                 <div class="row table-row">
                                     <div><input type="text" class="rowQty" value="<?php echo $row[0]; ?>"></div>
                                     <div class="desc">
@@ -101,6 +100,9 @@ if (file_exists($db_file)) {
                                     <div class="price"><span class="curency"></span>
                                         <input type="text" class="rowPrice" value="<?php echo $row[2]; ?>">
                                     </div>
+                                    <?php if ($index !== 0) { ?>
+                                    <button type="button" class="table-row-remove" onclick="AddNewField.methods.remove(event)">X</button>
+                                    <?php } ?>
                                 </div>
                                 <?php } ?>
                             </div>
@@ -145,9 +147,8 @@ if (file_exists($db_file)) {
         <button class="btn btn-template" data-clinic="ichilovcomplex">Шаблон Ихилов Комплекс</button>
         <div class="title">Настройки документа</div>
         <button class="btn btn-warning btn-page" id="btn-new-page">Добавить страницу</button>
-        <?php if ($invoice['id'] > 0) { ?>
+   
         <button class="btn btn-warning" id="removePage">Удалить страницу</button>
-        <?php } ?>
         <div class="choose-currency">
             <div class="title">Выберите валюту</div>
             <div>

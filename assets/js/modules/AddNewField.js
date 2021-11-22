@@ -20,7 +20,7 @@ const AddNewField = {
 
     <button type="button" class="table-row-remove" onclick="AddNewField.methods.remove(event)">X</button>
  	</div>`,
-		html: `<div class="tbl"> <div class="table"> <div class="row"> <div>Qty</div><div>Description</div><div>Total</div></div><div class="row table-row"> <div><input type="text" class="rowQty" value=""></div><div class="desc"> <div class="rowDescription" contenteditable="true"></div></div><div class="price"><span class="curency"></span><input type="text" class="rowPrice" value=""></div></div></div></div>`,
+		html: `<div class="tbl"> <div class="table"> <div class="row"> <div>Qty</div><div>Description</div><div>Total</div></div><div class="row table-row"> <div><input type="text" class="rowQty" value=""></div><div class="desc"> <div class="rowDescription" contenteditable="true"></div></div><div class="price"><span class="curency"></span><input type="text" class="rowPrice" value=""></div></div></div></div><div class="row page_number"></div>`,
 
 		validationAddField(parent, table) {
 			if (table.clientHeight + 37 < parent.clientHeight) return true
