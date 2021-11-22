@@ -14,7 +14,6 @@ $invoice = [
     "currency" => "0",
     "template" => "assutatop",
     "rows" => [["", "", ""]],
-    "id" => 0
 ];
 if (file_exists($db_file)) {
     $invoices = array_reverse(json_decode(file_get_contents($db_file), true));
@@ -92,7 +91,7 @@ if (file_exists($db_file)) {
                                     <div>Total</div>
                                 </div>
                                 <?php
-                                foreach ($invoice['rows'] as $row) { ?>
+                                foreach ($invoice['rows'] as $index => $row) { ?>
                                 <div class="row table-row">
                                     <div><input type="text" class="rowQty" value="<?php echo $row[0]; ?>"></div>
                                     <div class="desc">
@@ -101,12 +100,19 @@ if (file_exists($db_file)) {
                                     <div class="price"><span class="curency"></span>
                                         <input type="text" class="rowPrice" value="<?php echo $row[2]; ?>">
                                     </div>
+                                    <?php if ($index !== 0) { ?>
+                                    <button type="button" class="table-row-remove" onclick="AddNewField.methods.remove(event)">X</button>
+                                    <?php } ?>
                                 </div>
                                 <?php } ?>
                             </div>
                         </div>
                     </div>
-                    <div class="row total">
+                    <div class="row page_number">
+                        1
+                    </div>
+
+                    <div class="row total" id="total">
                         <div class="bank-details">
                             <div class="title">Bank details</div>
                             <ul>
@@ -124,10 +130,8 @@ if (file_exists($db_file)) {
                                 Total: <span class="curency"></span>&nbsp;<span class="count">0.00</span>
                             </div>
                             <button id="total-btn" class="total-btn">Пересчитать</button>
+                            
                         </div>
-                    </div>
-                    <div class="row page_number">
-                        <!--$page_num-->
                     </div>
                 </section>
                 <section class="footer"><img src="./img/AssutaTop_bottom@1200px.png" alt=""></section>
@@ -143,9 +147,8 @@ if (file_exists($db_file)) {
         <button class="btn btn-template" data-clinic="ichilovcomplex">Шаблон Ихилов Комплекс</button>
         <div class="title">Настройки документа</div>
         <button class="btn btn-warning btn-page" id="btn-new-page">Добавить страницу</button>
-        <?php if ($invoice['id'] > 0) { ?>
+   
         <button class="btn btn-warning" id="removePage">Удалить страницу</button>
-        <?php } ?>
         <div class="choose-currency">
             <div class="title">Выберите валюту</div>
             <div>
@@ -167,26 +170,25 @@ if (file_exists($db_file)) {
         <input id="id" type="hidden" value="<?php echo $invoice['id']; ?>">
 
         <div class="text-template">
-            <button id="text-template-pop-btn" class="btn btn-warning">Заметки</button>
-            <div class="text-template-popup">
-                <div class="popup_content">
-                    <div class="popup_head">
-                        <div class="left">
-                            <div class="text">Оригинал</div>
-                        </div>
-                        <div class="right">
-                            <div class="text">Перевод</div>
-                        </div>
-                        <div class="close">X</div>
-                    </div>
-                    <div class="popup_body">
-                        <div class="left">
+            <button class="btn btn-warning" data-get-modal="simple-modal">Заметки</button>
+        </div>
+    </div>
+
+    <div class="modals">
+        <div class="modals__modal" data-modal="simple-modal">
+            <div class="modals__modal-row">
+                <div class="modals__modal-block">
+                    <div class="modals__cols">
+                        <div class="modals__col">
+                            <p class="modals__col-title">Оригинал</p>
                             <div contenteditable="true" class="text original"></div>
                         </div>
-                        <div class="right">
+                        <div class="modals__col">
+                            <p class="modals__col-title">Перевод</p>
                             <div contenteditable="true" class="text transleted"></div>
                         </div>
                     </div>
+                    <div class="modals__close" data-close-modal="simple-modal">X</div>
                 </div>
             </div>
         </div>
